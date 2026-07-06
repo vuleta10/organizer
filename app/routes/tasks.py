@@ -17,10 +17,6 @@ tasks_ns = Namespace(
     description="Task operations"
 )
 
-# =========================
-# REQUEST MODELS
-# =========================
-
 task_create_model = tasks_ns.model(
     "TaskCreateRequest",
     {
@@ -54,10 +50,6 @@ task_update_model = tasks_ns.model(
     }
 )
 
-# =========================
-# RESPONSE MODELS
-# =========================
-
 task_response_model = tasks_ns.model(
     "TaskResponse",
     {
@@ -88,10 +80,6 @@ error_response_model = tasks_ns.model(
         "error": fields.String()
     }
 )
-
-# =========================
-# CREATE TASK
-# =========================
 
 @tasks_ns.route("")
 class TaskCollection(Resource):
@@ -142,10 +130,6 @@ class TaskCollection(Resource):
         finally:
             session.close()
 
-# =========================
-# GET USER TASKS
-# =========================
-
 @tasks_ns.route("/user/<int:user_id>")
 class UserTasksResource(Resource):
 
@@ -182,10 +166,6 @@ class UserTasksResource(Resource):
 
         finally:
             session.close()
-
-# =========================
-# GET USER TASKS BY DATE
-# =========================
 
 @tasks_ns.route("/user/<int:user_id>/<string:task_date>")
 class UserTasksByDateResource(Resource):
@@ -224,10 +204,6 @@ class UserTasksByDateResource(Resource):
 
         finally:
             session.close()
-
-# =========================
-# UPDATE / DELETE TASK
-# =========================
 
 @tasks_ns.route("/<int:task_id>")
 class TaskResource(Resource):

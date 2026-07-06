@@ -5,7 +5,7 @@ class UserService:
 
     def __init__(self, user_repository):
         self.user_repository = user_repository # kreiramo objekat user_repository
-    # kreiramo metod register    
+    # kreiramo metod register
     def register(
         self,
         username,
@@ -27,10 +27,10 @@ class UserService:
             password=password
         )
         #zovemo metod iz user repo koji kreira usera
-        return self.user_repository.create( 
+        return self.user_repository.create(
             user
         )
-    # definišemo login metod   
+    # definišemo login metod
     def login(
         self,
         username,

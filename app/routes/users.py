@@ -12,10 +12,6 @@ users_ns = Namespace(
     description="User operations"
 )
 
-# =========================
-# REQUEST MODELS
-# =========================
-
 register_model = users_ns.model(
     "RegisterRequest",
     {
@@ -62,10 +58,6 @@ change_password_model = users_ns.model(
     }
 )
 
-# =========================
-# RESPONSE MODELS
-# =========================
-
 user_response_model = users_ns.model(
     "UserResponse",
     {
@@ -88,10 +80,6 @@ error_response_model = users_ns.model(
         "error": fields.String()
     }
 )
-
-# =========================
-# REGISTER
-# =========================
 
 @users_ns.route("/register")
 class RegisterResource(Resource):
@@ -139,10 +127,6 @@ class RegisterResource(Resource):
         finally:
             session.close()
 
-# =========================
-# LOGIN
-# =========================
-
 @users_ns.route("/login")
 class LoginResource(Resource):
 
@@ -188,10 +172,6 @@ class LoginResource(Resource):
 
         finally:
             session.close()
-
-# =========================
-# CHANGE PASSWORD
-# =========================
 
 @users_ns.route("/change-password")
 class ChangePasswordResource(Resource):

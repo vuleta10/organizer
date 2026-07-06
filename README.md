@@ -1,31 +1,31 @@
 # Organizer API
 
-Task organizer REST API built with Flask, Flask-RESTX (Swagger/OpenAPI docs), SQLAlchemy and PostgreSQL, following a layered Repository / Service / Routes architecture.
+REST API za organizaciju zadataka (task organizer), napravljen u Flask-u, sa Flask-RESTX (Swagger/OpenAPI dokumentacija), SQLAlchemy i PostgreSQL bazom, po slojevitoj arhitekturi Repository / Service / Routes.
 
-## Running with Docker (recommended)
+## Pokretanje sa Dockerom (preporučeno)
 
-Requirements: [Docker](https://www.docker.com/) and Docker Compose.
+Potrebno: [Docker](https://www.docker.com/) i Docker Compose.
 
 ```bash
-git clone <this-repo-url>
+git clone <link-ka-repo>
 cd organizer
 cp .env.example .env
 docker compose up --build
 ```
 
-The API will be available at `http://localhost:5000`, with interactive Swagger docs at `http://localhost:5000/swagger.html`.
+API je dostupan na `http://localhost:5000`, a Swagger dokumentacija na `http://localhost:5000/swagger.html`.
 
-PostgreSQL is exposed on the host at port `55432` (mapped to the container's `5432`) in case you want to connect with a database client. The API itself talks to the `db` service directly over the internal Docker network.
+PostgreSQL je izložen na host portu `55432` (mapiran na kontejnerski `5432`) ako želiš da se povežeš nekim database klijentom. Sam API komunicira sa `db` servisom direktno preko interne Docker mreže.
 
-To stop everything:
+Za gašenje:
 
 ```bash
 docker compose down
 ```
 
-## Running locally without Docker
+## Pokretanje lokalno bez Dockera
 
-Requirements: Python 3.12+, a running PostgreSQL instance.
+Potrebno: Python 3.12+, pokrenut PostgreSQL.
 
 ```bash
 python -m venv .venv
@@ -35,43 +35,43 @@ source .venv/bin/activate   # Linux / macOS
 pip install -r requirements.txt
 ```
 
-Create a `.env` file (see `.env.example`) with `POSTGRES_HOST` pointing at your local Postgres instance (e.g. `localhost`) and the matching port/credentials.
+Napravi `.env` fajl (po uzoru na `.env.example`) sa `POSTGRES_HOST` podešenim na lokalnu Postgres instancu (npr. `localhost`) i odgovarajućim portom/kredencijalima.
 
 ```bash
 python -m app.app
 ```
 
-## Running tests
+## Pokretanje testova
 
 ```bash
 pytest
 ```
 
-Unit tests exercise the service layer with mocked repositories; integration tests exercise the Flask API end-to-end and need a reachable PostgreSQL database (same `.env` configuration as above).
+Unit testovi testiraju servisni sloj sa mokovanim repozitorijumima; integracioni testovi testiraju API preko HTTP zahteva i zahtevaju dostupnu PostgreSQL bazu (ista `.env` konfiguracija kao gore).
 
-## Project structure
+## Struktura projekta
 
 ```
 app/
-  models/         SQLAlchemy ORM models (User, Task)
-  repositories/    Data access layer
-  services/        Business logic layer
-  routes/          Flask-RESTX namespaces / HTTP layer
-  database.py      Engine/session setup
-  swagger.py       Flask-RESTX Api instance
-  app.py           Application entrypoint
+  models/         SQLAlchemy modeli (User, Task)
+  repositories/    Sloj za pristup podacima
+  services/        Sloj sa poslovnom logikom
+  routes/          Flask-RESTX namespace-ovi / HTTP sloj
+  database.py      Podešavanje engine-a i sesije
+  swagger.py       Flask-RESTX Api instanca
+  app.py           Ulazna tačka aplikacije
 tests/
-  unit/            Service layer tests with mocked repositories
-  integration/      API tests against a real database
+  unit/            Testovi servisnog sloja sa mokovanim repozitorijumima
+  integration/      Testovi API-ja nad pravom bazom
 ```
 
-## API overview
+## Pregled API-ja
 
-- `POST /users/register` - register a new user
-- `POST /users/login` - log in
-- `PUT /users/change-password` - change password
-- `POST /tasks` - create a task
-- `GET /tasks/user/<user_id>` - list a user's tasks
-- `GET /tasks/user/<user_id>/<date>` - list a user's tasks for a given date (`YYYY-MM-DD`)
-- `PUT /tasks/<task_id>` - update a task
-- `DELETE /tasks/<task_id>` - delete a task
+- `POST /users/register` - registracija novog korisnika
+- `POST /users/login` - prijava
+- `PUT /users/change-password` - promena lozinke
+- `POST /tasks` - kreiranje zadatka
+- `GET /tasks/user/<user_id>` - lista zadataka korisnika
+- `GET /tasks/user/<user_id>/<date>` - lista zadataka korisnika za dati datum (`YYYY-MM-DD`)
+- `PUT /tasks/<task_id>` - izmena zadatka
+- `DELETE /tasks/<task_id>` - brisanje zadatka
