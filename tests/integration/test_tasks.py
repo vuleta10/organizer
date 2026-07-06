@@ -1,17 +1,19 @@
-def test_create_task(client):
+def _get_user_id(client, username):
 
-    user_response = client.post(
-        "/users/register",
+    response = client.post(
+        "/users/login",
         json={
-            "username": "pera_task",
-            "password": "123"
+            "username": username,
+            "password": "test123"
         }
     )
 
-    user_id = (
-        user_response
-        .get_json()["id"]
-    )
+    return response.get_json()["id"]
+
+
+def test_create_task(client):
+
+    user_id = _get_user_id(client, "utest5")
 
     response = client.post(
         "/tasks",
@@ -26,18 +28,7 @@ def test_create_task(client):
 
 def test_get_user_tasks(client):
 
-    user_response = client.post(
-        "/users/register",
-        json={
-            "username": "user2",
-            "password": "123"
-        }
-    )
-
-    user_id = (
-        user_response
-        .get_json()["id"]
-    )
+    user_id = _get_user_id(client, "utest6")
 
     client.post(
         "/tasks",
@@ -57,21 +48,10 @@ def test_get_user_tasks(client):
     tasks = response.get_json()
 
     assert len(tasks) > 0
-    
+
 def test_get_tasks_by_date(client):
 
-    user_response = client.post(
-        "/users/register",
-        json={
-            "username": "user3",
-            "password": "123"
-        }
-    )
-
-    user_id = (
-        user_response
-        .get_json()["id"]
-    )
+    user_id = _get_user_id(client, "utest7")
 
     client.post(
         "/tasks",
@@ -94,18 +74,7 @@ def test_get_tasks_by_date(client):
 
 def test_delete_task(client):
 
-    user_response = client.post(
-        "/users/register",
-        json={
-            "username": "deleteuser",
-            "password": "123"
-        }
-    )
-
-    user_id = (
-        user_response
-        .get_json()["id"]
-    )
+    user_id = _get_user_id(client, "utest8")
 
     task_response = client.post(
         "/tasks",

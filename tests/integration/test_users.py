@@ -3,8 +3,8 @@ def test_register_user(client):
     response = client.post(
         "/users/register",
         json={
-            "username": "pera",
-            "password": "123"
+            "username": "utest1",
+            "password": "test123"
         }
     )
 
@@ -12,46 +12,31 @@ def test_register_user(client):
 
     data = response.get_json()
 
-    assert data["username"] == "pera"
-    
+    assert data["username"] == "utest1"
+
 def test_login_user(client):
 
-    client.post(
-    "/users/register",
-    json={
-        "username": "testuser",
-        "password": "123"
-    }
-    )
-
     response = client.post(
-    "/users/login",
-    json={
-        "username": "testuser",
-        "password": "123"
-    }
+        "/users/login",
+        json={
+            "username": "utest2",
+            "password": "test123"
+        }
     )
 
     assert response.status_code == 200
 
     data = response.get_json()
 
-    assert data["username"] == "testuser"  
-def test_login_wrong_password(client):
+    assert data["username"] == "utest2"
 
-    client.post(
-        "/users/register",
-        json={
-            "username": "marko",
-            "password": "123"
-        }
-    )
+def test_login_wrong_password(client):
 
     response = client.post(
         "/users/login",
         json={
-            "username": "marko",
-            "password": "999"
+            "username": "utest3",
+            "password": "wrong_password"
         }
     )
 
@@ -59,20 +44,12 @@ def test_login_wrong_password(client):
 
 def test_change_password(client):
 
-    client.post(
-        "/users/register",
-        json={
-            "username": "pera",
-            "password": "123"
-        }
-    )
-
     response = client.put(
         "/users/change-password",
         json={
-            "username": "pera",
-            "old_password": "123",
-            "new_password": "456"
+            "username": "utest4",
+            "old_password": "test123",
+            "new_password": "test456"
         }
     )
 
