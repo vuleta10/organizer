@@ -43,11 +43,53 @@ python -m app.app
 
 ## Pokretanje testova
 
+Svi testovi odjednom:
+
 ```bash
 pytest
 ```
 
-Unit testovi testiraju servisni sloj sa mokovanim repozitorijumima; integracioni testovi testiraju API preko HTTP zahteva i zahtevaju dostupnu PostgreSQL bazu (ista `.env` konfiguracija kao gore).
+### Unit testovi
+
+Testiraju servisni sloj sa mokovanim repozitorijumima, ne zahtevaju bazu:
+
+```bash
+pytest tests/unit
+```
+
+### Integracioni testovi
+
+Testiraju API preko pravih HTTP zahteva i pišu u pravu PostgreSQL bazu, pa prvo treba pokrenuti bazu:
+
+```bash
+docker compose up -d db
+```
+
+Zatim, pošto se testovi pokreću sa host mašine (van kontejnera), treba podesiti env varijable da gađaju bazu preko host porta (`55432`, ne `db`, jer to ime važi samo unutar Docker mreže):
+
+```bash
+# Windows PowerShell
+$env:POSTGRES_HOST="localhost"
+$env:POSTGRES_PORT="55432"
+$env:POSTGRES_USER="postgres"
+$env:POSTGRES_PASSWORD="postgres"
+$env:POSTGRES_DB="organizer_db"
+
+pytest tests/integration
+```
+
+```bash
+# Linux / macOS
+export POSTGRES_HOST=localhost
+export POSTGRES_PORT=55432
+export POSTGRES_USER=postgres
+export POSTGRES_PASSWORD=postgres
+export POSTGRES_DB=organizer_db
+
+pytest tests/integration
+```
+
+Integracioni testovi koriste fiksan skup test korisnika (`utest1`–`utest8`). Prvi test koji se pokreće (`test_00_setup.py`) briše te korisnike i njihove taskove iz baze ako postoje od ranijeg pokretanja, pa ih ponovo upisuje - tako da je paket testova moguće pokretati više puta zaredom nad istom bazom bez ručnog resetovanja.
 
 ## Struktura projekta
 
