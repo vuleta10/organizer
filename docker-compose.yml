@@ -1,0 +1,49 @@
+services:
+
+  db:
+
+    image: postgres:16
+
+    container_name: organizer-db
+
+    restart: always
+
+    environment:
+
+      POSTGRES_DB: organizer_db
+
+      POSTGRES_USER: postgres
+
+      POSTGRES_PASSWORD: postgres
+
+    ports:
+
+      - "55432:5432"
+
+    volumes:
+
+      - postgres_data:/var/lib/postgresql/data
+
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  api:
+
+    build: .
+
+    container_name: organizer-api
+
+    depends_on:
+
+      - db
+
+    env_file:
+
+      - .env
+
+    ports:
+
+      - "5000:5000"
+
+volumes:
+
+  postgres_data:
