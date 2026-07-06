@@ -117,3 +117,18 @@ tests/
 - `GET /tasks/user/<user_id>/<date>` - lista zadataka korisnika za dati datum (`YYYY-MM-DD`)
 - `PUT /tasks/<task_id>` - izmena zadatka
 - `DELETE /tasks/<task_id>` - brisanje zadatka
+
+## OpenAPI specifikacija
+
+Kompletna OpenAPI (Swagger 2.0) specifikacija sa svim rutama, formatima zahteva i odgovora nalazi se u [`openapi.json`](openapi.json). Automatski je generisana od strane Flask-RESTX na osnovu modela definisanih u `app/routes/`.
+
+Dok je aplikacija pokrenuta, ista specifikacija je dostupna i preko:
+
+- `http://localhost:5000/swagger.json` - "sirova" specifikacija (JSON)
+- `http://localhost:5000/swagger.html` - interaktivna Swagger UI dokumentacija
+
+Ako se rute ili modeli promene, `openapi.json` se može ponovo generisati sa:
+
+```bash
+curl http://localhost:5000/swagger.json -o openapi.json
+```

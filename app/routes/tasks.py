@@ -88,7 +88,8 @@ class TaskCollection(Resource):
 
     @tasks_ns.response(
         201,
-        "Task created"
+        "Task created",
+        task_created_response_model
     )
 
     @tasks_ns.response(
@@ -211,6 +212,12 @@ class TaskResource(Resource):
     @tasks_ns.expect(task_update_model)
 
     @tasks_ns.response(
+        200,
+        "Task updated",
+        task_created_response_model
+    )
+
+    @tasks_ns.response(
         400,
         "Task not found",
         error_response_model
@@ -249,6 +256,12 @@ class TaskResource(Resource):
 
         finally:
             session.close()
+
+    @tasks_ns.response(
+        200,
+        "Task deleted",
+        task_deleted_response_model
+    )
 
     @tasks_ns.response(
         404,

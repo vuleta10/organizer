@@ -88,7 +88,8 @@ class RegisterResource(Resource):
 
     @users_ns.response(
         201,
-        "User created"
+        "User created",
+        user_response_model
     )
 
     @users_ns.response(
@@ -134,7 +135,8 @@ class LoginResource(Resource):
 
     @users_ns.response(
         200,
-        "Login successful"
+        "Login successful",
+        user_response_model
     )
 
     @users_ns.response(
@@ -180,7 +182,8 @@ class ChangePasswordResource(Resource):
 
     @users_ns.response(
         200,
-        "Password changed"
+        "Password changed",
+        change_password_response_model
     )
 
     @users_ns.response(

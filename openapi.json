@@ -1,0 +1,463 @@
+{
+  "swagger": "2.0",
+  "basePath": "/",
+  "paths": {
+    "/tasks": {
+      "post": {
+        "responses": {
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "201": {
+            "description": "Task created",
+            "schema": {
+              "$ref": "#/definitions/TaskCreatedResponse"
+            }
+          }
+        },
+        "operationId": "post_task_collection",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/TaskCreateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "tasks"
+        ]
+      }
+    },
+    "/tasks/user/{user_id}": {
+      "parameters": [
+        {
+          "name": "user_id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TaskResponse"
+              }
+            }
+          }
+        },
+        "operationId": "get_user_tasks_resource",
+        "parameters": [
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "tasks"
+        ]
+      }
+    },
+    "/tasks/user/{user_id}/{task_date}": {
+      "parameters": [
+        {
+          "name": "user_id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "task_date",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TaskResponse"
+              }
+            }
+          }
+        },
+        "operationId": "get_user_tasks_by_date_resource",
+        "parameters": [
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "tasks"
+        ]
+      }
+    },
+    "/tasks/{task_id}": {
+      "parameters": [
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ],
+      "delete": {
+        "responses": {
+          "404": {
+            "description": "Task not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "200": {
+            "description": "Task deleted",
+            "schema": {
+              "$ref": "#/definitions/TaskDeletedResponse"
+            }
+          }
+        },
+        "operationId": "delete_task_resource",
+        "tags": [
+          "tasks"
+        ]
+      },
+      "put": {
+        "responses": {
+          "400": {
+            "description": "Task not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "200": {
+            "description": "Task updated",
+            "schema": {
+              "$ref": "#/definitions/TaskCreatedResponse"
+            }
+          }
+        },
+        "operationId": "put_task_resource",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/TaskUpdateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "tasks"
+        ]
+      }
+    },
+    "/users/change-password": {
+      "put": {
+        "responses": {
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "200": {
+            "description": "Password changed",
+            "schema": {
+              "$ref": "#/definitions/ChangePasswordResponse"
+            }
+          }
+        },
+        "operationId": "put_change_password_resource",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/ChangePasswordRequest"
+            }
+          }
+        ],
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/users/login": {
+      "post": {
+        "responses": {
+          "401": {
+            "description": "Invalid credentials",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "200": {
+            "description": "Login successful",
+            "schema": {
+              "$ref": "#/definitions/UserResponse"
+            }
+          }
+        },
+        "operationId": "post_login_resource",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/LoginRequest"
+            }
+          }
+        ],
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/users/register": {
+      "post": {
+        "responses": {
+          "400": {
+            "description": "Username already exists",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "201": {
+            "description": "User created",
+            "schema": {
+              "$ref": "#/definitions/UserResponse"
+            }
+          }
+        },
+        "operationId": "post_register_resource",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/RegisterRequest"
+            }
+          }
+        ],
+        "tags": [
+          "users"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Organizer API",
+    "version": "1.0",
+    "description": "Task Organizer REST API"
+  },
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "users",
+      "description": "User operations"
+    },
+    {
+      "name": "tasks",
+      "description": "Task operations"
+    }
+  ],
+  "definitions": {
+    "RegisterRequest": {
+      "required": [
+        "password",
+        "username"
+      ],
+      "properties": {
+        "username": {
+          "type": "string",
+          "description": "Username"
+        },
+        "password": {
+          "type": "string",
+          "description": "Password"
+        }
+      },
+      "type": "object"
+    },
+    "ErrorResponse": {
+      "properties": {
+        "error": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "UserResponse": {
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "username": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LoginRequest": {
+      "required": [
+        "password",
+        "username"
+      ],
+      "properties": {
+        "username": {
+          "type": "string",
+          "description": "Username"
+        },
+        "password": {
+          "type": "string",
+          "description": "Password"
+        }
+      },
+      "type": "object"
+    },
+    "ChangePasswordRequest": {
+      "required": [
+        "new_password",
+        "old_password",
+        "username"
+      ],
+      "properties": {
+        "username": {
+          "type": "string",
+          "description": "Username"
+        },
+        "old_password": {
+          "type": "string",
+          "description": "Current password"
+        },
+        "new_password": {
+          "type": "string",
+          "description": "New password"
+        }
+      },
+      "type": "object"
+    },
+    "ChangePasswordResponse": {
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "TaskCreateRequest": {
+      "required": [
+        "datum",
+        "task",
+        "user_id"
+      ],
+      "properties": {
+        "user_id": {
+          "type": "integer",
+          "description": "User identifier"
+        },
+        "task": {
+          "type": "string",
+          "description": "Task description"
+        },
+        "datum": {
+          "type": "string",
+          "description": "Due date (YYYY-MM-DD)"
+        }
+      },
+      "type": "object"
+    },
+    "TaskCreatedResponse": {
+      "properties": {
+        "id": {
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "TaskResponse": {
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "datum": {
+          "type": "string"
+        },
+        "task": {
+          "type": "string"
+        },
+        "done": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "TaskUpdateRequest": {
+      "required": [
+        "datum",
+        "done",
+        "task"
+      ],
+      "properties": {
+        "task": {
+          "type": "string"
+        },
+        "datum": {
+          "type": "string"
+        },
+        "done": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "TaskDeletedResponse": {
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "responses": {
+    "ParseError": {
+      "description": "When a mask can't be parsed"
+    },
+    "MaskError": {
+      "description": "When any error occurs on mask"
+    }
+  }
+}
